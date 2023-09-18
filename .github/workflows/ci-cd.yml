@@ -1,47 +1,45 @@
-name: Flask CI/CD test
+name: Flask CI/CD
 
 on:
-  push:
+  push: 
     branches:
       - main
-      
+
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
-  
+
     steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build Flask Image
+        run: |
+          docker build -t myflaskapp:${{ github.sha }} .
+          
+      - name: Setup Kubectl
+        uses: docker://bitnami/kubectl:latest
+        env:
+          KUBECONFIG: ~/.kube/config
 
-    - uses: actions/checkout@v2
-
-    - name: Build Flask Image 
-      run: |
-        docker build -t myflaskapp:${{ github.sha }} .
-
-    - name: Setup Kubectl
-      uses: docker://bitnami/kubectl:latest
-      env: 
-        KUBECONFIG: ~/.kube/config
-
-    - name: Deploy to Minikube
-      run: |
-        kubectl apply -f flask-deployment.yaml
-        kubectl apply -f service.yaml 
-        kubectl rollout status deployment/my-deployment
+      - name: Deploy to Minikube  
+        run: |
+          kubectl apply -f flask-deployment.yaml
+          kubectl apply -f service.yaml
+          kubectl rollout status deployment/my-deployment
 
   test:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
 
     steps:
-    
-    - uses: actions/checkout@v2
-
-    - name: Install Dependencies
-      run: | 
-        pip install pytest
-
-    - name: Run Tests
-      run: |
-        pytest tests
+      - uses: actions/checkout@v2
+      
+      - name: Install Dependencies
+        run: |
+          pip install pytest
+          
+      - name: Run Tests
+        run: |
+          pytest tests
