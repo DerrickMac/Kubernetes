@@ -20,11 +20,11 @@ docker build -t myimage .
 
 
 3. Apply the Kubernetes deployment and service:
-kubectl apply -f deployment.yaml -f service.yaml
+kubectl apply -f flask-deployment.yaml -f service.yaml
 
 
 4. Port forward to access the app:
-kubectl port-forward service/my-service 5000:5000
+kubectl port-forward service/my-flask-service 5000:5000
 
 
 5. Access the running app at http://localhost:5000
