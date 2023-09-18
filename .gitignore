@@ -1,0 +1,23 @@
+# Ignore site-packages contents
+.venv/lib/python3.7/site-packages/
+
+# But keep .venv folder itself
+!.venv/
+
+# Allow specific files needed for recreating environment 
+!requirements.txt
+
+# Cache and temp files
+__pycache__/
+*.pyc
+
+# Logs
+logs
+*.log
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
+.idea/
