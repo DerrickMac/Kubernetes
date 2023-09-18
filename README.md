@@ -11,23 +11,21 @@ This project demonstrates deploying a simple Flask web application to a Kubernet
 ## Getting Started
 
 1. Start the minikube cluster:
+  minikube start --driver=docker
 
-minikube start --driver=docker
-
-
-2. Build the Flask Docker image:
-docker build -t myimage .
+3. Build the Flask Docker image:
+  docker build -t myimage .
 
 
-3. Apply the Kubernetes deployment and service:
-kubectl apply -f deployment.yaml -f service.yaml
+4. Apply the Kubernetes deployment and service:
+  kubectl apply -f deployment.yaml -f service.yaml
 
 
-4. Port forward to access the app:
-kubectl port-forward service/my-service 5000:5000
+5. Port forward to access the app:
+  kubectl port-forward service/my-service 5000:5000
 
 
-5. Access the running app at http://localhost:5000
+6. Access the running app at http://localhost:5000
 
 ## Cleanup
 kubectl delete deployment my-deployment
